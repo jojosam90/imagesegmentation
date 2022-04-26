@@ -4,6 +4,10 @@
 
 ![image](https://user-images.githubusercontent.com/77944932/165195778-9acaf4ce-ac35-4692-9afd-c6ab3ccf7e0b.png)
 
+### VGG-16 Architecture
+
+![image](https://user-images.githubusercontent.com/77944932/165211927-911f8e81-1a71-4e4e-846e-881ab13a96ad.png)
+
 ## Types of Image Segmentation
 ### Semantic Segmentation
   - classify the objects belonging to the same class in the image with **single label**.
