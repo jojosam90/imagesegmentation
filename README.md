@@ -242,6 +242,32 @@ R-CNN was slow and expensive so Fast R-CNN was developed as a fast and more effi
 
 Faster R-CNN used RPN(Region Proposal Network) along with Fast R-CNN for multiple image classification, detection and segmentation.
 
+## YOLO - You Only Look Once
+- A single convolutional network simultaneously **predicts multiple bounding boxes and class probabilities for those boxes.**
 
+![image](https://user-images.githubusercontent.com/77944932/165242336-500f7734-c161-4660-85c2-94b1f0421ca3.png)
 
+![image](https://user-images.githubusercontent.com/77944932/165242414-d978d1c5-5b4c-4582-a1d7-6df11bfd7df3.png)
 
+### YOLO v1
+-  inspired by the GoogLeNet model for image classification.
+-  has 24 convolutional layers followed by 2 fully connected layers.
+-  YOLO uses a linear activation function for the final layer and a leaky ReLU for all other layers.
+-  YOLO predicts the coordinates of bounding boxes directly using fully connected layers on top of the convolutional feature extractor. YOLO only predicts 98 boxes per image.
+-  Limitatins : each grid cell only predicts two boxes and can only have one class and this limits the number of nearby objects that the model can predict. struggles with small objects that appear in groups, such as flocks of birds
+
+### Fast YOLO / YOLO v2
+- uses 9 convolutional layer instead of 24 used in YOLO and also uses fever filters.
+- **Input size in YOLOv2 has been increased from 224*224 to 448*448.**
+- YOLOv2 divides the entire image into 13 x 13 grid. This helps address the issue of smaller object detection in YOLO v1.
+- YOLOv2 uses batch normalization which leads to significant improvements in convergence and eliminates the need for other forms of regularization. 
+- YOLOv2 runs **k-means clustering on the dimensions of bounding boxes** to get good priors or anchors for the model. YOLOv2 found k= 5 gives a good tradeoff for recall vs. complexity of the model. YOLOv2 uses 5 anchor boxes
+- YOLOv2 uses **Darknet architecture with 19 convolutional layers, 5 max pooling layers and a softmax layer for classification objects**.
+- YOLOv2 use **anchor boxes to detect multiple objects, objects of different scales, and overlapping objects. This improves the speed and efficiency for object detection.**
+
+### YOLO v3
+-Uses 9 anchors
+ 
+-Uses logistic regression to predict the objectiveness score instead of Softmax function used in YOLO v2
+
+-YOLO v3 uses the Darknet-53 network for feature extractor which has 53 convolutional layers
