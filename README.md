@@ -8,6 +8,8 @@
 
 ![image](https://user-images.githubusercontent.com/77944932/165211927-911f8e81-1a71-4e4e-846e-881ab13a96ad.png)
 
+cross entropy loss as loss functions
+
 ## Types of Image Segmentation
 ### Semantic Segmentation
   - classify the objects belonging to the same class in the image with **single label**.
