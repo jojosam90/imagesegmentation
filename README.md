@@ -278,10 +278,43 @@ Faster R-CNN used RPN(Region Proposal Network) along with Fast R-CNN for multipl
 - Mask R-CNN extends Faster R-CNN.
 
 ### What’s different in Mask R-CNN and Faster R-CNN?
-Faster R-CNN has two outputs
+
+1.Faster R-CNN has two outputs
 -For each candidate object, a class label and a bounding-box offset;
 
-Mask R-CNN has three outputs
+2.Mask R-CNN has three outputs
 -For each candidate object, a class label and a bounding-box offset;
 Third output is the object mask
+
+### What’s similar between Mask R-CNN and Faster R-CNN?
+
+- Both Mask R-CNN and Faster R-CNN have a branch for classification and bounding box regression.
+- Both use ResNet 101 architecture to extract features from image.
+- Both use Region Proposal Network(RPN) to generate Region of Interests(RoI)
+
+### How does Mask R-CNN work?
+
+Mask R-CNN model is divided into two parts
+1.Region proposal network (RPN) to proposes candidate object bounding boxes.
+
+2.Binary mask classifier to generate mask for every class.
+
+3.Image is run through the CNN to generate the feature maps.
+
+4.Region Proposal Network(RPN) uses a CNN to generate the multiple Region of Interest(RoI) using a lightweight binary classifier. It does this using 9 anchors boxes over the image. The classifier returns object/no-object scores. Non Max suppression is applied to Anchors with high objectness score.
+
+5.The RoI Align network outputs multiple bounding boxes rather than a single definite one and warp them into a fixed dimension.
+
+6.Warped features are then fed into fully connected layers to make classification using softmax and boundary box prediction is further refined using the regression model.
+
+7.Warped features are also fed into Mask classifier, which consists of two CNN’s to output a binary mask for each RoI. Mask Classifier allows the network to generate masks for every class without competition among classes
+
+![image](https://user-images.githubusercontent.com/77944932/165262704-2abf5bd7-a2df-464a-b6a4-560ae179cf9d.png)
+
+To predict multiple objects or multiple instances of objects in an image, Mask R-CNN makes thousands of predictions. Final object detection is done by removing anchor boxes that belong to the background class and the remaining ones are filtered by their confidence score. We find the anchor boxes with IoU greater than 0.5. Anchor boxes with the greatest confidence score are selected using Non-Max suppression.
+
+### Non-Max Suppression
+- Non-Max Suppression will remove all bounding boxes where IoU is less than or equal to 0.5
+
+- Pick the bounding box with the highest value for IoU and suppress the other bounding boxes for identifying the same object
 
