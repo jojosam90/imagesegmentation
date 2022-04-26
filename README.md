@@ -89,7 +89,28 @@ B - ground truth
  ![image](https://user-images.githubusercontent.com/77944932/165199829-2524c5f4-8051-4cfa-b8e6-b0a7f3ac7602.png)
 
  - Satellite Imaging
+ 
 ![image](https://user-images.githubusercontent.com/77944932/165199852-9cef67bd-efd8-41b8-a794-86ed63a7d130.png)
+
+## How does image classification work using Convolution Neural Network(CNN)?
+
+1.CNN takes input as an image “x”, which is a 2-D array of pixels with different color channels(Red,Green and Blue-RGB).
+
+2. **Different filters or feature detector** applied to the input image to output **feature maps**.
+
+3.Multiple convolutions are performed in parallel by applying **nonlinear function ReLU** to the convolutional layer. Feature detector identifies different things like edge detection, different shapes, bends or different colors etc.
+
+![image](https://user-images.githubusercontent.com/77944932/165234924-404f2e90-0323-4ca0-8ada-8a9d3bdc311c.png)
+
+4.Apply Min Pooling, Max Pooling or Average Pooling. **Max pooling** function provides better performance compared to min or average pooling.
+
+5.Pooling helps with **Translational Invariance.** Translational invariance means that when we change the input by a small amount the pooled outputs does not change.Invariance of image implies that even when an image is rotated, sized differently or viewed in different illumination an object will be recognized as the same object.
+
+6. Next,flatten the pooled layer to input it to a fully connected(FC) neural network.
+
+7.
+
+
 
 
 
