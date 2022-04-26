@@ -96,7 +96,7 @@ B - ground truth
 
 1.CNN takes input as an image “x”, which is a 2-D array of pixels with different color channels(Red,Green and Blue-RGB).
 
-2. **Different filters or feature detector** applied to the input image to output **feature maps**.
+2.**Different filters or feature detector** applied to the input image to output **feature maps**.
 
 3.Multiple convolutions are performed in parallel by applying **nonlinear function ReLU** to the convolutional layer. Feature detector identifies different things like edge detection, different shapes, bends or different colors etc.
 
@@ -106,7 +106,7 @@ B - ground truth
 
 5.Pooling helps with **Translational Invariance.** Translational invariance means that when we change the input by a small amount the pooled outputs does not change.Invariance of image implies that even when an image is rotated, sized differently or viewed in different illumination an object will be recognized as the same object.
 
-6. Next,flatten the pooled layer to input it to a fully connected(FC) neural network.
+6.Next,flatten the pooled layer to input it to a fully connected(FC) neural network.
 
 7.
 
