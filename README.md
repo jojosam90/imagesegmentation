@@ -296,6 +296,7 @@ Third output is the object mask
 ### How does Mask R-CNN work?
 
 Mask R-CNN model is divided into two parts
+
 1.Region proposal network (RPN) to proposes candidate object bounding boxes.
 
 2.Binary mask classifier to generate mask for every class.
