@@ -302,7 +302,7 @@ Mask R-CNN model is divided into two parts
 
 3.Image is run through the CNN to generate the feature maps.
 
-4.Region Proposal Network(RPN) uses a CNN to generate the multiple Region of Interest(RoI) using a lightweight binary classifier. It does this using 9 anchors boxes over the image. The classifier returns object/no-object scores. Non Max suppression is applied to Anchors with high objectness score.
+4.Region Proposal Network(RPN) uses a CNN to generate the multiple Region of Interest(RoI) using a lightweight binary classifier. The region that RPN scans over are called **anchors**. It does this using 9 anchors boxes over the image.The classifier returns object/no-object scores. Non Max suppression is applied to Anchors with high objectness score.
 
 5.The RoI Align network outputs multiple bounding boxes rather than a single definite one and warp them into a fixed dimension.
 
@@ -318,4 +318,35 @@ To predict multiple objects or multiple instances of objects in an image, Mask R
 - Non-Max Suppression will remove all bounding boxes where IoU is less than or equal to 0.5
 
 - Pick the bounding box with the highest value for IoU and suppress the other bounding boxes for identifying the same object
+
+## Mask R-CNN Keywords
+**1.Backbone**
+
+![image](https://user-images.githubusercontent.com/77944932/165269404-63b0aee0-7fee-4c75-9032-bd866ac1f7fd.png)
+
+This is a standard convolutional neural network (typically, ResNet50 or ResNet101) that serves as a feature extractor. The early layers detect low level features (edges and corners), and later layers successively detect higher level features (car, person, sky).
+
+**2.Region Proposal Network**
+The regions that the RPN scans over are called **anchors**.
+RPN doesn’t scan over the image directly (even though we draw the anchors on the image for illustration). Instead, the RPN scans over the backbone feature map.
+
+The RPN generates two outputs for each anchor:
+
+**Anchor Class**: One of two classes: foreground or background. The FG class implies that there is likely an object in that box.
+
+**Bounding Box Refinement**: A foreground anchor (also called positive anchor) might not be centered perfectly over the object. So the RPN estimates a delta (% change in x, y, width, height) to refine the anchor box to fit the object better.
+
+Using the RPN predictions, we pick the top anchors that are likely to contain objects and refine their location and size. If several anchors overlap too much, we keep the one with the highest foreground score and discard the rest (referred to as Non-max Suppression). 
+
+### ROI Classifier & Bounding Box Regressor
+This stage runs on the regions of interest (ROIs) proposed by the RPN. And just like the RPN, it generates two outputs for each ROI:
+
+![image](https://user-images.githubusercontent.com/77944932/165270269-59314a29-e5f1-467f-ae1f-418bb1f89b9f.png)
+
+**Class**: The class of the object in the ROI. Unlike the RPN, which has two classes (FG/BG), this network is deeper and has the capacity to classify regions to specific classes (person, car, chair, …etc.). It can also generate a background class, which causes the ROI to be discarded.
+
+**Bounding Box Refinement**: Very similar to how it’s done in the RPN, and its purpose is to further refine the location and size of the bounding box to encapsulate the object.
+
+### ROI Pooling
+
 
