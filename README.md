@@ -108,11 +108,59 @@ B - ground truth
 
 6.Next,flatten the pooled layer to input it to a fully connected(FC) neural network.
 
-7.
+7.**softmax activation function** for multi class classification in the final output layer of the fully connected layer.
 
+8.**sigmoid activation function** for binary classification in the final output layer of the fully connected layer.
 
+## Limitation of CNN
+- Don't work well when multiple objects are in the image and draw bounding boxes around all the different objects.
 
+## Region based CNN- R-CNN
+- used for classification as well as objection detection with bounding boxes for multiple objects present in an image
+- uses **selective search algorithm** for object detection to generate **region proposals**.
 
+### Selective search in identifying multiple objects in an image
+Step 1: **Generate initial sub-segmentation**. We generate as many regions, each of which belongs to at most one object.
 
+Step 2: **Recursively combine similar regions into larger ones.** Here we use Greedy algorithm.
+- From the set of regions, choose two regions that are most similar.
+- Combine them into a single, larger region
+- Repeat until only one region remains.
 
+![image](https://user-images.githubusercontent.com/77944932/165237505-d6491ac0-5f2b-4777-ae04-e4a585c6ff24.png)
 
+Step 3: Use the generated regions to produce candidate object locations.
+
+### What is Region Proposal?
+- set of **candidate detection** available to the detector. CNN runs the sliding windows over the entire image however R-CNN instead select just a few windows. R-CNN uses **2000 regions** for an image.
+1.Generate category-independent region proposals using selective search to extract around 2000 region proposals. Warp each proposal.
+
+2.Warped region proposals are fed to a large convolutional neural network. CNN acts as a feature extractor that extracts a fixed-length feature vector from each region. After passing through the CNN, R-CNN extracts a 4096-dimensional feature vector for each region proposal
+
+3.Apply **SVM(Support Vector Machine)** to the extracted features from CNN. SVM helps to classify the presence of the object in the region. Regressor is used to predict the four values of the bounding box.
+
+4.To all scored regions in an image, apply a greedy non-maximum suppression. **Non-Max suppression** rejects a region if it has an **intersection-over union (IoU)** overlap with a higher scoring selected region larger than a learned threshold.
+
+![image](https://user-images.githubusercontent.com/77944932/165238138-5d116c79-3a20-4b26-96a2-ebbf1d71b285.png)
+
+### What is greedy Non-Max suppression and why do we use it?
+Our objective with object detection is to detect an object just once with one bounding box. However, with object detection, we may find multiple detections for the same objects. **Non-Max suppression ensures detection of an object only once.**
+
+### Intersection over Union — IoU
+IoU computes intersection over the union of the two bounding boxes, the bounding box for the ground truth and the bounding box for the predicted box by algorithm.
+
+### Non-Max Suppression
+- Non-Max Suppression will remove all bounding boxes where IoU is less than or equal to 0.5
+- Pick the bounding box with the highest value for IoU and suppress the other bounding boxes for identifying the same object
+
+## Limitation of R-CNN
+- training is slow and expensive as extract 2000 regions for every image based on selective search.
+- Extracting features using CNN for every image region. For N images, we will have N*2000 CNN features.
+- R-CNN’s Object detection uses three models:
+  •CNN for feature extraction
+  •Linear SVM classifier for identifying objects
+  •Regression model for tightening the bounding boxes
+  
+  ![image](https://user-images.githubusercontent.com/77944932/165238583-0a639d80-0099-43c6-88bd-76da7fb0dc75.png)
+  
+  
