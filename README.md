@@ -289,8 +289,9 @@ Third output is the object mask
 ### What’s similar between Mask R-CNN and Faster R-CNN?
 
 - Both Mask R-CNN and Faster R-CNN have a branch for classification and bounding box regression.
-- Both use ResNet 101 architecture to extract features from image.
-- Both use Region Proposal Network(RPN) to generate Region of Interests(RoI)
+- Both use **ResNet 101 architecture (Backbone Model)** to extract features maps from image.
+- Both use **Region Proposal Network(RPN)** to generate Region of Interests(RoI).This basically predicts if an object is present in that region (or not). In this step, we get those regions or feature maps which the model predicts contain some object.
+- The regions obtained from the RPN might be of different shapes.A pooling layer and convert all the regions to the same shape. Next, these regions are passed through a fully connected network so that the class label and bounding boxes are predicted.
 
 ### How does Mask R-CNN work?
 
