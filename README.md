@@ -247,6 +247,8 @@ Faster R-CNN used RPN(Region Proposal Network) along with Fast R-CNN for multipl
 
 ![image](https://user-images.githubusercontent.com/77944932/165242336-500f7734-c161-4660-85c2-94b1f0421ca3.png)
 
+
+
 ![image](https://user-images.githubusercontent.com/77944932/165242414-d978d1c5-5b4c-4582-a1d7-6df11bfd7df3.png)
 
 ### YOLO v1
@@ -271,3 +273,15 @@ Faster R-CNN used RPN(Region Proposal Network) along with Fast R-CNN for multipl
 -Uses logistic regression to predict the objectiveness score instead of Softmax function used in YOLO v2
 
 -YOLO v3 uses the Darknet-53 network for feature extractor which has 53 convolutional layers
+
+## Mask R-CNN
+- Mask R-CNN extends Faster R-CNN.
+
+### What’s different in Mask R-CNN and Faster R-CNN?
+Faster R-CNN has two outputs
+-For each candidate object, a class label and a bounding-box offset;
+
+Mask R-CNN has three outputs
+-For each candidate object, a class label and a bounding-box offset;
+Third output is the object mask
+
