@@ -295,6 +295,8 @@ Third output is the object mask
 
 ### How does Mask R-CNN work?
 
+![image](https://user-images.githubusercontent.com/77944932/165463214-b4484baf-fa18-457d-95e2-e86fbb26b35b.png)
+
 Mask R-CNN model is divided into two parts
 
 1.Region proposal network (RPN) to proposes candidate object bounding boxes.
