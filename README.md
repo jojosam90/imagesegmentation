@@ -349,5 +349,29 @@ This stage runs on the regions of interest (ROIs) proposed by the RPN. And just 
 **Bounding Box Refinement**: Very similar to how it’s done in the RPN, and its purpose is to further refine the location and size of the bounding box to encapsulate the object.
 
 ### ROI Pooling
+Classifiers don’t handle variable input size very well. They typically require a fixed input size. But, due to the bounding box refinement step in the RPN, the ROI boxes can have different sizes. That’s where ROI Pooling comes into play. **ROI pooling** refers to **cropping a part of a feature map and resizing it to a fixed size.**
+
+![image](https://user-images.githubusercontent.com/77944932/165409705-8d547084-6e6f-4929-9c08-6085f4ff89b2.png)
+
+A method named ROIAlign, in which they sample the feature map at different points and apply a bilinear interpolation.
+
+### Segmentation Masks
+- The mask branch is a convolutional network that takes the positive regions selected by the ROI classifier and generates masks for the regions.
+- The generated masks are **low resolution: 28x28 pixels**. But they are **soft masks**, represented by **float numbers**, so they **hold more details than binary masks**
+- The small mask size helps keep the mask branch light. During training, we scale down the ground-truth masks to 28x28 to compute the loss, and during inferencing we scale up the predicted masks to the size of the ROI bounding box and that gives us the final masks, one per object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
