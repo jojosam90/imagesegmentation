@@ -323,6 +323,17 @@ To predict multiple objects or multiple instances of objects in an image, Mask R
 - Pick the bounding box with the highest value for IoU and suppress the other bounding boxes for identifying the same object
 
 ## Mask R-CNN Keywords
+
+**Backbone Network — implemented as ResNet 101 and Feature Pyramid Network (FPN), this network extracts the initial feature maps which are forward propagated to other components.**
+
+**Region Proposal Network(RPN)—is used to extract Region of Interest(ROI) from images and Non-max suppression is applied to select the most appropriate bounding boxes or ROI generated from RPN.**
+
+**ROI Align — wraps Region of Interest(ROI) into fixed dimensions.**
+
+**Fully Connected Layers — consists of two parallel layers, one uses softmax for classification and the other regression for bounding box prediction.**
+
+**Mask Classifier — generates a binary mask for each instance in an image.**
+
 **1.Backbone**
 
 ![image](https://user-images.githubusercontent.com/77944932/165269404-63b0aee0-7fee-4c75-9032-bd866ac1f7fd.png)
