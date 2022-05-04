@@ -133,6 +133,7 @@ Step 3: Use the generated regions to produce candidate object locations.
 
 ### What is Region Proposal?
 - set of **candidate detection** available to the detector. CNN runs the sliding windows over the entire image however R-CNN instead select just a few windows. R-CNN uses **2000 regions** for an image.
+
 1.Generate category-independent region proposals using selective search to extract around 2000 region proposals. Warp each proposal.
 
 2.Warped region proposals are fed to a large convolutional neural network. CNN acts as a feature extractor that extracts a fixed-length feature vector from each region. After passing through the CNN, R-CNN extracts a 4096-dimensional feature vector for each region proposal
