@@ -374,10 +374,65 @@ A method named ROIAlign, in which they sample the feature map at different point
 - The generated masks are **low resolution: 28x28 pixels**. But they are **soft masks**, represented by **float numbers**, so they **hold more details than binary masks**
 - The small mask size helps keep the mask branch light. During training, we scale down the ground-truth masks to 28x28 to compute the loss, and during inferencing we scale up the predicted masks to the size of the ROI bounding box and that gives us the final masks, one per object.
 
+## Panoptic Segmentation
 
+- Pan means “all” and optic means “vision”. Panoptic segmentation, therefore, roughly means “everything visible in a given visual field”.
 
+- Panoptic segmentation can be broken down into three simple steps:
 
+1) Separating each object in the image into individual parts, which are independent of each other.
 
+2) Painting each separated part with a different color - labeling.
+
+3) Classifying the objects into things and stuff.
+
+**Things**
+
+- refers to objects that have properly defined geometry and are countable, like a person, cars, animals, etc.
+
+**Stuff**
+
+- used to define objects that don’t have proper geometry but are heavily identified by the texture and material like the sky, road, water bodies, etc.
+
+![image](https://user-images.githubusercontent.com/77944932/166875223-0fa428f3-ee0f-4d7e-bf91-11ac825baae3.png)
+
+### How does Panoptic Segmentation work?
+
+In panoptic segmentation, the input image is fed into two networks: a fully convolutional network (FCN) and Mask R-CNN.
+
+- The FCN is responsible for capturing patterns from the uncountable objects - stuff – and it yields semantic segmentations.
+
+- The FCN uses skip connections that enable it to reconstruct accurate segmentation boundaries. Also, skip connections enable the model to make local predictions that accurately define the global or the overall structure of the object.
+
+- Likewise, the Mask R-CNN is responsible for capturing patterns of the objects that are countable - things - and it yields instance segmentations. It consists of two stages:
+
+- Region Proposal Network (RPN): It is a process, where the network yields regions of interest (ROI).
+
+- Faster R-CNN: It leverages ROI to perform classification and create bounding boxes.
+
+- The output of both models is then combined to get a more general output.
+
+However, this approach has several drawbacks such as:
+
+- Computational inefficiency
+- 
+- Inability to learn useful patterns, which leads to inaccurate predictions
+- 
+- Inconsistency between the network outputs
+- 
+To address these issues, a new architecture called the Efficient Panoptic Segmentation or EfficientPS was proposed, which improves both the efficiency and the performance.
+
+### EfficientPS
+
+EfficientPS uses a shared backbone built on the architecture called the EfficientNet.
+
+The architecture consists of:
+
+1. EfficientNet: A backbone network for feature extraction. It also contains a two-way feature pyramid network that allows the bidirectional flow of information that produces high-quality panoptic results.
+
+2. Two output branches: One for semantic segmentation and one for instance segmentation.
+
+3. A fusion block that combines the outputs from both branch
 
 
 
