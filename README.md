@@ -432,12 +432,61 @@ The architecture consists of:
 
 2. Two output branches: One for semantic segmentation and one for instance segmentation.
 
-3. A fusion block that combines the outputs from both branch
+3. A fusion block that combines the outputs from both branch.
 
+![image](https://user-images.githubusercontent.com/77944932/166875807-f1339652-80e6-4916-b7bd-19723ff702bf.png)
 
+EfficientPS network is represented in red, while the two-way Feature Pyramid Network (FPN) is represented in purple, blue and green. The network for semantic and instance segmentation is represented in yellow and orange, respectively, while the fusion block is represented at the end.
 
+The image is fed into the shared backbone, which is an encoder of the EfficientNet. This encoder is coupled with a two-way FPN that extracts a rich representation of information and fuses multi-scale features much more effectively.
 
+The output from the EfficientNet is then fed into two heads in parallel: one for semantic segmentation and the other for instance segmentation.
 
+The semantic head consists of three different modules, which enable it to capture fine features, along with long-range contextual dependencies, and improve object boundary refinement. This, in turn, allows it to separate different objects from each other with a high level of precision.
+
+The instance head is similar to Mask R-CNN with certain modifications. This network is responsible for classification, object detection, and mask prediction.
+
+The last part of the EfficientPS is the fusion module that fuses the prediction from both heads. 
+
+This fusion module is not parameterized—it doesn’t optimize itself during the backpropagation. It is rather a block that performs fusion in two stages. 
+
+In the first stage, the module obtains the corresponding class prediction, the confidence score bounding box, and mask logits. Then, the module:
+
+1) Removes all the object instances with the confidence score lower than a threshold value.
+
+2) Once reductant instances are removed, the remaining instances or mask-logits are resized followed by zero-padding.
+
+3) Finally, the mask-logits are scaled the same resolution as the input image.
+
+In the first stage, the network sorts the class prediction, bounding box, and mask-logits with respect to the confidence scores.
+
+In the second stage, it is the overlapping of the mask-logit that is evaluated.
+
+It is done by calculating the sigmoid of the mask-logits. Every mask-logit that has a threshold greater than 0.5, obtains a corresponding binary mask. Furthermore, if the overlapping threshold between the binary is greater than a certain threshold, it is retained, while the others are removed.
+
+A similar thing is done for the output yielded from the semantic head. 
+
+Once the segmentations from both heads are filtered, they are combined using the Hadamard product, and voila—we’ve just performed the panoptic segmentation.
+
+![image](https://user-images.githubusercontent.com/77944932/166875971-15b63f2e-3229-4c62-bb81-aa3e3571f60b.png)
+
+### Panoptic Segmentation applications
+
+1) Medical Imaging
+
+2) Autonomous vehicles
+
+3) Digital Image processing
+
+### Summary 
+
+- Panoptic segmentation is an image segmentation task that combines the prediction from both instance and semantic segmentation into a general unified output.
+
+-  Panoptic segmentation involves studying both stuff and things.
+
+- The initial panoptic deep learning model used two networks: Fully convolutional network (FCN) for semantic segmentation and Mask R-CNN for instance segmentation which was slow and yielded inconsistent and inaccurate segmentations due to which EfficientPS was introduced.
+
+- EfficientPS consists of a shared backbone that enables the network to efficiently encode and combine semantically rich multi-scale features. It is fast and consistent with the output.
 
 
 
